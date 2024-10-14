@@ -1,0 +1,20 @@
+plugins {
+    id 'com.google.gms.google-services' version '4.3.15' apply false  // เวอร์ชันล่าสุดที่รองรับ
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"  // กำหนดไดเรกทอรี build ให้ชัดเจน
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"  // กำหนด build directory ของแต่ละโมดูล
+    project.evaluationDependsOn(":app")  // ตั้งค่าให้ subprojects ขึ้นอยู่กับโมดูล app
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir  // ลบ build directory เมื่อ clean
+}
